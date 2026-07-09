@@ -34,50 +34,7 @@ function goToStep(stepNumber) {
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", function () {
-  const photoInput = document.getElementById("photoInput");
-  const placeholder = document.getElementById("photoPlaceholder");
-
-  // ДЕМО-ФОТО (красивая девушка с randomuser.me)
-  const demoPhoto = "my_photo.jpg";
-
-  // Сразу загружаем демо-фото
-  setTimeout(() => {
-    const img = document.createElement("img");
-    img.src = demoPhoto;
-    img.alt = "💕";
-    img.style.width = "100%";
-    img.style.height = "100%";
-    img.style.objectFit = "cover";
-    img.style.borderRadius = "22px";
-    placeholder.innerHTML = "";
-    placeholder.appendChild(img);
-  }, 100);
-
-  if (photoInput) {
-    photoInput.addEventListener("change", function (e) {
-      const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (event) {
-          const existingImg = placeholder.querySelector("img");
-          if (existingImg) {
-            existingImg.src = event.target.result;
-          } else {
-            placeholder.innerHTML = "";
-            const img = document.createElement("img");
-            img.src = event.target.result;
-            img.alt = "Твоя фотография ❤️";
-            img.style.width = "100%";
-            img.style.height = "100%";
-            img.style.objectFit = "cover";
-            img.style.borderRadius = "22px";
-            placeholder.appendChild(img);
-          }
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-  }
+  console.log("✅ Фото загружены через CSS");
 });
 
 // ============================================================
@@ -88,6 +45,102 @@ function handleYes() {
   if (isAnswered) return;
   isAnswered = true;
   goToStep(4);
+}
+
+// ============================================================
+// ВЗРЫВ КНОПКИ (ГЛОБАЛЬНАЯ ФУНКЦИЯ)
+// ============================================================
+
+function explodeButton(buttonElement) {
+  if (!buttonElement) return;
+
+  const rect = buttonElement.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  let container = document.getElementById("explosionContainer");
+
+  // Если контейнера нет — создаём
+  if (!container) {
+    container = document.createElement("div");
+    container.id = "explosionContainer";
+    container.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      overflow: hidden;
+    `;
+    document.body.appendChild(container);
+  }
+
+  const colors = [
+    "#ff6b8f",
+    "#ff8aaa",
+    "#ff4d6d",
+    "#ff99cc",
+    "#ffb3c6",
+    "#ff2d55",
+    "#ffd9e5",
+    "#ffb347",
+    "#ff6b6b",
+    "#ff9f43",
+    "#ff6b8f",
+    "#e8486e",
+  ];
+
+  const emojis = ["❤️", "💕", "💗", "💖", "💘", "💝", "✨", "🌟", "🌸", "🎉"];
+
+  const particlesCount = 40;
+
+  for (let i = 0; i < particlesCount; i++) {
+    const particle = document.createElement("div");
+    particle.className = "explosion-particle";
+
+    const size = 8 + Math.random() * 16;
+    const angle = Math.random() * 2 * Math.PI;
+    const distance = 100 + Math.random() * 250;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance - 50;
+
+    const isEmoji = Math.random() > 0.6;
+
+    if (isEmoji) {
+      particle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      particle.style.fontSize = size + "px";
+      particle.style.background = "none";
+      particle.style.width = "auto";
+      particle.style.height = "auto";
+    } else {
+      particle.style.background =
+        colors[Math.floor(Math.random() * colors.length)];
+      particle.style.width = size + "px";
+      particle.style.height = size + "px";
+    }
+
+    particle.style.left = centerX + "px";
+    particle.style.top = centerY + "px";
+    particle.style.setProperty("--tx", tx + "px");
+    particle.style.setProperty("--ty", ty + "px");
+    particle.style.animationDuration = 0.6 + Math.random() * 0.6 + "s";
+    particle.style.transform = "rotate(" + Math.random() * 720 + "deg)";
+    particle.style.position = "fixed";
+    particle.style.borderRadius = "50%";
+    particle.style.pointerEvents = "none";
+    particle.style.animation = "particleExplode 1s ease-out forwards";
+
+    container.appendChild(particle);
+
+    setTimeout(() => {
+      particle.remove();
+    }, 1500);
+  }
+
+  buttonElement.style.opacity = "0";
+  buttonElement.style.transform = "scale(0)";
+  buttonElement.style.pointerEvents = "none";
 }
 
 // ============================================================
@@ -183,15 +236,15 @@ function createBurstHearts() {
     const heart = document.createElement("div");
     heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
     heart.style.cssText = `
-            position: fixed;
-            font-size: ${20 + Math.random() * 30}px;
-            left: ${Math.random() * 100}vw;
-            top: ${Math.random() * 100}vh;
-            pointer-events: none;
-            z-index: 999;
-            animation: heartBurst ${1.5 + Math.random() * 2}s ease-out forwards;
-            transform: scale(0);
-        `;
+      position: fixed;
+      font-size: ${20 + Math.random() * 30}px;
+      left: ${Math.random() * 100}vw;
+      top: ${Math.random() * 100}vh;
+      pointer-events: none;
+      z-index: 999;
+      animation: heartBurst ${1.5 + Math.random() * 2}s ease-out forwards;
+      transform: scale(0);
+    `;
     document.body.appendChild(heart);
 
     setTimeout(() => {
@@ -217,22 +270,33 @@ function launchConfetti() {
   ];
   const container = document.createElement("div");
   container.className = "confetti-container";
+  container.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+  `;
   document.body.appendChild(container);
 
   for (let i = 0; i < 100; i++) {
     const piece = document.createElement("div");
     piece.className = "confetti-piece";
     piece.style.cssText = `
-            left: ${Math.random() * 100}%;
-            top: -10px;
-            background: ${colors[Math.floor(Math.random() * colors.length)]};
-            width: ${8 + Math.random() * 10}px;
-            height: ${8 + Math.random() * 10}px;
-            border-radius: ${Math.random() > 0.5 ? "50%" : "3px"};
-            animation-duration: ${2 + Math.random() * 3}s;
-            animation-delay: ${Math.random() * 2}s;
-            transform: rotate(${Math.random() * 360}deg);
-        `;
+      position: absolute;
+      left: ${Math.random() * 100}%;
+      top: -10px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      width: ${8 + Math.random() * 10}px;
+      height: ${8 + Math.random() * 10}px;
+      border-radius: ${Math.random() > 0.5 ? "50%" : "3px"};
+      animation: confettiFall ${2 + Math.random() * 3}s linear forwards;
+      animation-delay: ${Math.random() * 2}s;
+      transform: rotate(${Math.random() * 360}deg);
+    `;
     container.appendChild(piece);
   }
 
@@ -256,12 +320,15 @@ document.addEventListener("DOMContentLoaded", function () {
       Math.floor(Math.random() * 6)
     ];
     heart.style.cssText = `
-            left: ${Math.random() * 100}%;
-            font-size: ${14 + Math.random() * 22}px;
-            animation-duration: ${8 + Math.random() * 12}s;
-            animation-delay: ${Math.random() * 5}s;
-            color: ${["#ff6b8f", "#ff8aaa", "#ff4d6d", "#ff99cc", "#ffb3c6"][Math.floor(Math.random() * 5)]};
-        `;
+      position: absolute;
+      left: ${Math.random() * 100}%;
+      font-size: ${14 + Math.random() * 22}px;
+      animation: floatHeart ${8 + Math.random() * 12}s linear infinite;
+      animation-delay: ${Math.random() * 5}s;
+      color: ${["#ff6b8f", "#ff8aaa", "#ff4d6d", "#ff99cc", "#ffb3c6"][Math.floor(Math.random() * 5)]};
+      opacity: 0.4;
+      user-select: none;
+    `;
     heartsContainer.appendChild(heart);
 
     setTimeout(() => {
@@ -273,19 +340,39 @@ document.addEventListener("DOMContentLoaded", function () {
 // ============================================================
 // СБРОС
 // ============================================================
-
 function resetAll() {
   isAnswered = false;
   noAttempts = 0;
 
+  // ===== ВОССТАНАВЛИВАЕМ КНОПКУ "НЕТ" =====
   const noBtn = document.getElementById("noBtn");
   if (noBtn) {
     noBtn.style.position = "relative";
     noBtn.style.left = "0px";
     noBtn.style.top = "0px";
     noBtn.style.transition = "all 0.3s ease";
+    noBtn.style.opacity = "1";
+    noBtn.style.transform = "scale(1)";
+    noBtn.style.pointerEvents = "auto";
   }
 
+  // ===== ВОССТАНАВЛИВАЕМ КНОПКУ "НАЖМИ СЮДА" =====
+  const btnStart = document.getElementById("btnStart");
+  if (btnStart) {
+    btnStart.style.opacity = "1";
+    btnStart.style.transform = "scale(1)";
+    btnStart.style.pointerEvents = "auto";
+  }
+
+  // ===== ВОССТАНАВЛИВАЕМ КНОПКУ "ДА!" =====
+  const yesBtn = document.getElementById("yesBtn");
+  if (yesBtn) {
+    yesBtn.style.opacity = "1";
+    yesBtn.style.transform = "scale(1)";
+    yesBtn.style.pointerEvents = "auto";
+  }
+
+  // ===== ВОССТАНАВЛИВАЕМ СООБЩЕНИЕ "НЕТ" =====
   const noMessage = document.getElementById("noMessage");
   if (noMessage) {
     noMessage.style.display = "none";
@@ -295,27 +382,71 @@ function resetAll() {
     }
   }
 
+  // ===== СБРАСЫВАЕМ СЧЁТЧИК ПОПЫТОК =====
   const attemptCounter = document.getElementById("attemptCounter");
   if (attemptCounter) {
     attemptCounter.textContent = "";
   }
 
+  // ===== УДАЛЯЕМ КОНФЕТТИ =====
   document.querySelectorAll(".confetti-container").forEach((el) => el.remove());
 
+  // ===== ПЕРЕХОДИМ НА ПЕРВЫЙ ШАГ =====
   goToStep(1);
 }
 
 // ============================================================
-// ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ АНИМАЦИЙ (если не загрузились из CSS)
+// ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ АНИМАЦИЙ (добавляются в head)
 // ============================================================
 
 (function addExtraStyles() {
   const style = document.createElement("style");
   style.textContent = `
-        @keyframes heartBurst {
-            0% { transform: scale(0) rotate(0deg); opacity: 1; }
-            100% { transform: scale(1.5) rotate(720deg) translateY(-200px); opacity: 0; }
-        }
-    `;
+    @keyframes heartBurst {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: scale(1.5) rotate(720deg) translateY(-200px); opacity: 0; }
+    }
+
+    @keyframes particleExplode {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-20px) rotate(0deg) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(100vh) scale(0.5) rotate(0deg);
+        opacity: 0;
+      }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% {
+        transform: translateY(-10vh) scale(1.2) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+  `;
   document.head.appendChild(style);
 })();

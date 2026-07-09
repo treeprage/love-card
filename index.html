@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>❤️ Для тебя ❤️</title>
-    <!-- Font Awesome для красивых иконок -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
-    <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&display=swap"
       rel="stylesheet"
@@ -27,22 +25,31 @@
         <div class="icon-big">
           <i class="fas fa-heart" style="color: #ff6b8f"></i>
         </div>
+        <!-- ===== ФОТО ЗА СЕРДЕЧКАМИ ===== -->
+        <div class="hearts-photo-container">
+          <div class="heart-photo heart-photo-left"></div>
+          <div class="heart-photo heart-photo-right"></div>
+        </div>
         <h1>Привет, моя хорошая! 💕</h1>
         <p>Я подготовил для тебя кое-что особенное...</p>
-        <button class="btn-primary" onclick="goToStep(2)">
+        <button
+          class="btn-primary"
+          id="btnStart"
+          onclick="
+            explodeButton(this);
+            setTimeout(() => goToStep(2), 600);
+          "
+        >
           <i class="fas fa-star"></i> Нажми сюда <i class="fas fa-star"></i>
         </button>
       </div>
-      <!-- ШАГ 2: Фото + комплимент -->
+
+      <!-- ШАГ 2: Три фото в стопке -->
       <div class="step" id="step2">
-        <div class="photo-frame">
-          <div class="photo-placeholder" id="photoPlaceholder">
-            <!-- Здесь будет фото -->
-            <div class="photo-icon-wrapper">
-              <i class="fas fa-camera photo-icon"></i>
-              <span class="photo-text">Твоя фотография ❤️</span>
-            </div>
-          </div>
+        <div class="photo-stack">
+          <div class="photo-card photo-card-1" id="photo1"></div>
+          <div class="photo-card photo-card-2" id="photo2"></div>
+          <div class="photo-card photo-card-3" id="photo3"></div>
         </div>
         <h2>
           <i class="fas fa-sparkles" style="color: #ffb347"></i> Ты самая
@@ -62,7 +69,14 @@
             <i class="fas fa-heart" style="color: #ff6b8f"></i>
           </h1>
           <div class="button-group">
-            <button class="btn-yes" id="yesBtn" onclick="handleYes()">
+            <button
+              class="btn-yes"
+              id="yesBtn"
+              onclick="
+                explodeButton(this);
+                setTimeout(() => handleYes(), 600);
+              "
+            >
               <i class="fas fa-check-circle"></i> ДА!
             </button>
             <button class="btn-no" id="noBtn">
