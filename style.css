@@ -1,0 +1,512 @@
+/* ============================================================
+   БАЗОВЫЕ СТИЛИ
+   ============================================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Comfortaa", cursive;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, #ffe8f0 0%, #ffd9e5 100%);
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* ============================================================
+   ФОНОВЫЕ СЕРДЕЧКИ
+   ============================================================ */
+
+.hearts-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.heart-particle {
+  position: absolute;
+  font-size: 20px;
+  animation: floatHeart linear infinite;
+  user-select: none;
+  opacity: 0.4;
+}
+
+@keyframes floatHeart {
+  0% {
+    transform: translateY(100vh) scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-10vh) scale(1.2) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   ОСНОВНОЙ КОНТЕЙНЕР
+   ============================================================ */
+
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 40px;
+  padding: 40px 30px;
+  box-shadow:
+    0 20px 60px rgba(255, 100, 150, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.5);
+  text-align: center;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+/* ============================================================
+   ШАГИ
+   ============================================================ */
+
+.step {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 350px;
+  animation: fadeInStep 0.6s ease forwards;
+}
+
+.step.active {
+  display: flex;
+}
+
+@keyframes fadeInStep {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ============================================================
+   ТЕКСТ И ИКОНКИ
+   ============================================================ */
+
+h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #d4587a;
+  margin: 15px 0 10px;
+  line-height: 1.3;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: #d4587a;
+  margin: 15px 0 10px;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 400;
+  color: #996680;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.icon-big {
+  font-size: 60px;
+  margin-bottom: 10px;
+  animation: pulseIcon 2s ease-in-out infinite;
+}
+
+@keyframes pulseIcon {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+/* ============================================================
+   КНОПКИ
+   ============================================================ */
+
+.btn-primary {
+  background: linear-gradient(145deg, #ff8aaa, #ff6b8f);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 40px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 100, 150, 0.35);
+  font-family: "Comfortaa", cursive;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 12px 35px rgba(255, 100, 150, 0.5);
+}
+
+.btn-primary:active {
+  transform: scale(0.96);
+}
+
+/* ============================================================
+   КНОПКИ ДА / НЕТ
+   ============================================================ */
+
+.button-group {
+  display: flex;
+  gap: 30px;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-yes {
+  background: linear-gradient(145deg, #ff6b8f, #e8486e);
+  border: none;
+  border-radius: 50px;
+  padding: 16px 50px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 50, 80, 0.4);
+  font-family: "Comfortaa", cursive;
+  min-width: 140px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-yes:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 35px rgba(255, 50, 80, 0.6);
+}
+
+.btn-no {
+  background: rgba(150, 150, 150, 0.15);
+  border: 2px solid rgba(150, 150, 150, 0.3);
+  border-radius: 50px;
+  padding: 16px 40px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #996680;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  font-family: "Comfortaa", cursive;
+  min-width: 120px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.btn-no:hover {
+  background: rgba(150, 150, 150, 0.25);
+}
+
+.no-message {
+  margin-top: 20px;
+  padding: 12px 20px;
+  background: rgba(255, 100, 150, 0.1);
+  border-radius: 20px;
+  border: 2px dashed #ff6b8f;
+  animation: shake 0.5s ease;
+}
+
+.no-message p {
+  color: #d4587a;
+  font-weight: 600;
+  margin: 0;
+  font-size: 16px;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-10px);
+  }
+  75% {
+    transform: translateX(10px);
+  }
+}
+
+.attempt-counter {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #996680;
+  font-weight: 500;
+  min-height: 24px;
+}
+
+/* ============================================================
+   ФОТО-ФРЕЙМ
+   ============================================================ */
+
+.photo-frame {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 20px;
+  padding: 10px;
+  background: linear-gradient(145deg, #ffe0e8, #ffc8d6);
+  border-radius: 30px;
+  box-shadow:
+    0 8px 30px rgba(255, 100, 150, 0.2),
+    inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+  transition: all 0.4s ease;
+}
+
+.photo-frame:hover {
+  transform: scale(1.02);
+  box-shadow: 0 12px 40px rgba(255, 100, 150, 0.3);
+}
+
+.photo-placeholder {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  min-height: 200px;
+}
+
+.photo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 22px;
+}
+
+.photo-icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.photo-icon {
+  font-size: 48px;
+  color: #d4587a;
+  opacity: 0.6;
+}
+
+.photo-text {
+  font-size: 14px;
+  color: #996680;
+  font-weight: 500;
+}
+
+.photo-upload-wrapper {
+  margin-top: 12px;
+}
+
+.photo-upload-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 100, 150, 0.15);
+  color: #d4587a;
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px dashed rgba(255, 100, 150, 0.3);
+}
+
+.photo-upload-btn:hover {
+  background: rgba(255, 100, 150, 0.25);
+  transform: scale(1.02);
+}
+
+#photoInput {
+  display: none;
+}
+
+/* ============================================================
+   ФИНАЛ
+   ============================================================ */
+
+.final-block {
+  width: 100%;
+}
+
+.big-heart {
+  font-size: 100px;
+  animation: heartBeat 1s ease-in-out infinite;
+  display: inline-block;
+}
+
+@keyframes heartBeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.2);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.15);
+  }
+  60% {
+    transform: scale(1);
+  }
+}
+
+.final-emojis {
+  font-size: 32px;
+  margin: 15px 0 25px;
+  letter-spacing: 8px;
+}
+
+/* ============================================================
+   КОНФЕТТИ
+   ============================================================ */
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-20px) rotate(0deg) scale(0.5);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   АДАПТАЦИЯ
+   ============================================================ */
+
+@media (max-width: 500px) {
+  .container {
+    padding: 25px 20px;
+    border-radius: 30px;
+    min-height: 400px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  h2 {
+    font-size: 18px;
+  }
+  .btn-yes {
+    padding: 14px 30px;
+    font-size: 18px;
+    min-width: 100px;
+  }
+  .btn-no {
+    padding: 14px 25px;
+    font-size: 16px;
+    min-width: 90px;
+  }
+  .button-group {
+    gap: 15px;
+  }
+  .big-heart {
+    font-size: 70px;
+  }
+  .photo-frame {
+    max-width: 220px;
+  }
+  .btn-primary {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 380px) {
+  .container {
+    padding: 18px 14px;
+    border-radius: 25px;
+  }
+  h1 {
+    font-size: 18px;
+  }
+  .btn-yes {
+    padding: 12px 20px;
+    font-size: 16px;
+    min-width: 80px;
+  }
+  .btn-no {
+    padding: 12px 18px;
+    font-size: 14px;
+    min-width: 70px;
+  }
+  .button-group {
+    gap: 10px;
+  }
+}

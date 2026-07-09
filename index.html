@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>❤️ Для тебя ❤️</title>
+    <!-- Font Awesome для красивых иконок -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Фоновые сердечки -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+    <div class="container" id="mainContainer">
+      <!-- ШАГ 1: Приветствие -->
+      <div class="step active" id="step1">
+        <div class="icon-big">
+          <i class="fas fa-heart" style="color: #ff6b8f"></i>
+        </div>
+        <h1>Привет, моя хорошая! 💕</h1>
+        <p>Я подготовил для тебя кое-что особенное...</p>
+        <button class="btn-primary" onclick="goToStep(2)">
+          <i class="fas fa-star"></i> Нажми сюда <i class="fas fa-star"></i>
+        </button>
+      </div>
+      <!-- ШАГ 2: Фото + комплимент -->
+      <div class="step" id="step2">
+        <div class="photo-frame">
+          <div class="photo-placeholder" id="photoPlaceholder">
+            <!-- Здесь будет фото -->
+            <div class="photo-icon-wrapper">
+              <i class="fas fa-camera photo-icon"></i>
+              <span class="photo-text">Твоя фотография ❤️</span>
+            </div>
+          </div>
+        </div>
+        <h2>
+          <i class="fas fa-sparkles" style="color: #ffb347"></i> Ты самая
+          красивая! <i class="fas fa-sparkles" style="color: #ffb347"></i>
+        </h2>
+        <p>Каждый день с тобой — это праздник ✨</p>
+        <button class="btn-primary" onclick="goToStep(3)">
+          <i class="fas fa-arrow-right"></i> Дальше
+        </button>
+      </div>
+
+      <!-- ШАГ 3: Главный вопрос -->
+      <div class="step" id="step3">
+        <div class="question-block">
+          <h1>
+            <i class="fas fa-heart" style="color: #ff6b8f"></i> Любишь меня?
+            <i class="fas fa-heart" style="color: #ff6b8f"></i>
+          </h1>
+          <div class="button-group">
+            <button class="btn-yes" id="yesBtn" onclick="handleYes()">
+              <i class="fas fa-check-circle"></i> ДА!
+            </button>
+            <button class="btn-no" id="noBtn">
+              <i class="fas fa-times-circle"></i> НЕТ
+            </button>
+          </div>
+          <div class="no-message" id="noMessage" style="display: none">
+            <p>
+              <i class="fas fa-smile-wink"></i> А ты не можешь нажать "Нет"!
+              Попробуй ещё раз 😘
+            </p>
+          </div>
+          <div class="attempt-counter" id="attemptCounter"></div>
+        </div>
+      </div>
+
+      <!-- ШАГ 4: ФИНАЛ -->
+      <div class="step" id="step4">
+        <div class="final-block">
+          <div class="big-heart">
+            <i class="fas fa-heart" style="color: #ff2d55"></i>
+          </div>
+          <h1>Я ТЕБЯ ТОЖЕ ОЧЕНЬ ЛЮБЛЮ! 💖</h1>
+          <p>Ты — самое лучшее, что случилось в моей жизни ✨</p>
+          <div class="final-emojis">
+            <i class="fas fa-heart" style="color: #ff6b8f"></i>
+            <i class="fas fa-heart" style="color: #ff4d6d"></i>
+            <i class="fas fa-heart" style="color: #ff2d55"></i>
+            <i class="fas fa-heart" style="color: #ff6b8f"></i>
+            <i class="fas fa-heart" style="color: #ff4d6d"></i>
+          </div>
+          <button class="btn-primary" onclick="resetAll()">
+            <i class="fas fa-redo"></i> Начать заново
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
